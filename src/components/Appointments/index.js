@@ -66,20 +66,22 @@ class Appointments extends Component {
       appointmentsList,
       isClicked,
     } = this.state
-    const appointmentId = uuidv4()
+    if (appointmentTitle !== '' && appointmentDate !== '') {
+      const appointmentId = uuidv4()
 
-    const appointment = {
-      appointmentId,
-      appointmentTitle,
-      appointmentDate,
-      isClicked,
+      const appointment = {
+        appointmentId,
+        appointmentTitle,
+        appointmentDate,
+        isClicked,
+      }
+      this.setState({
+        appointmentsList: [...appointmentsList, appointment],
+        initialAppointmentsList: [...appointmentsList, appointment],
+        appointmentTitle: '',
+        appointmentDate: '',
+      })
     }
-    this.setState({
-      appointmentsList: [...appointmentsList, appointment],
-      initialAppointmentsList: [...appointmentsList, appointment],
-      appointmentTitle: '',
-      appointmentTitle: '',
-    })
   }
 
   render() {

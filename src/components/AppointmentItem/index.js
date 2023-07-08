@@ -21,7 +21,7 @@ const AppointmentItem = props => {
   return (
     <li className="Appointment-item-container">
       <div>
-        <h1>{appointmentTitle}</h1>
+        <p>{appointmentTitle}</p>
         <p>{formatedDate}</p>
       </div>
       <button type="button" data-testid="star" onClick={starStatusChange}>
