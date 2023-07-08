@@ -1,0 +1,24 @@
+/* Write your CSS here */
+.appointments-app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.appointments-card-container {
+  display: flex;
+  flex-direction: row;
+}
+.input-form {
+  display: flex;
+  flex-direction: column;
+}
+.line {
+  border: 1px solid black;
+}
+.appointments-and-starred-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
