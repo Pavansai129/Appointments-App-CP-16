@@ -5,7 +5,14 @@ import {v4 as uuidv4} from 'uuid'
 import AppointmentItem from '../AppointmentItem'
 
 class Appointments extends Component {
-  state = {appointmentTitle: '', appointmentDate: '', appointmentsList: []}
+  state = {
+    appointmentTitle: '',
+    appointmentDate: '',
+    initialAppointmentsList: [],
+    appointmentsList: [],
+    isClicked: false,
+    isFiltered: false,
+  }
 
   onAppointmentTitleChange = event =>
     this.setState({appointmentTitle: event.target.value})
@@ -13,20 +20,66 @@ class Appointments extends Component {
   onAppointmentDateChange = event =>
     this.setState({appointmentDate: event.target.value})
 
+  toggleStarStatus = id => {
+    this.setState(prevState => ({
+      appointmentsList: prevState.appointmentsList.map(eachAppointment => {
+        if (id === eachAppointment.appointmentId) {
+          return {...eachAppointment, isClicked: !eachAppointment.isClicked}
+        }
+        return eachAppointment
+      }),
+      initialAppointmentsList: prevState.initialAppointmentsList.map(
+        eachAppointment => {
+          if (id === eachAppointment.appointmentId) {
+            return {...eachAppointment, isClicked: !eachAppointment.isClicked}
+          }
+          return eachAppointment
+        },
+      ),
+    }))
+  }
+
+  toggleStarredAppointments = () => {
+    const {isFiltered} = this.state
+    if (!isFiltered) {
+      this.setState(prevState => ({
+        appointmentsList: prevState.appointmentsList.filter(eachAppointment => {
+          if (eachAppointment.isClicked) {
+            return true
+          }
+          return false
+        }),
+        isFiltered: !prevState.isFiltered,
+      }))
+    } else {
+      this.setState(prevState => ({
+        appointmentsList: [...prevState.initialAppointmentsList],
+      }))
+    }
+  }
+
   addAppointmentToAppointmentsList = event => {
     event.preventDefault()
-    const {appointmentTitle, appointmentDate, appointmentsList} = this.state
+    const {
+      appointmentTitle,
+      appointmentDate,
+      appointmentsList,
+      isClicked,
+    } = this.state
     const appointmentId = uuidv4()
-    console.log(appointmentId)
-    const isClicked = false
+
     const appointment = {
       appointmentId,
       appointmentTitle,
       appointmentDate,
       isClicked,
     }
-    console.log(appointment)
-    this.setState({appointmentsList: [...appointmentsList, appointment]})
+    this.setState({
+      appointmentsList: [...appointmentsList, appointment],
+      initialAppointmentsList: [...appointmentsList, appointment],
+      appointmentTitle: '',
+      appointmentTitle: '',
+    })
   }
 
   render() {
@@ -66,13 +119,16 @@ class Appointments extends Component {
           <hr className="line" />
           <div className="appointments-and-starred-button">
             <h1>Appointments</h1>
-            <button type="button">Starred</button>
+            <button type="button" onClick={this.toggleStarredAppointments}>
+              Starred
+            </button>
           </div>
           <ul>
             {appointmentsList.map(each => (
               <AppointmentItem
                 key={each.appointmentId}
                 eachAppointment={each}
+                toggleStarStatus={this.toggleStarStatus}
               />
             ))}
           </ul>

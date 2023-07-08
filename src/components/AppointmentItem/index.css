@@ -1,1 +1,9 @@
 /* Write your CSS here */
+.Appointment-item-container {
+  list-style-type: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
