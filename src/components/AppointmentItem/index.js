@@ -13,7 +13,7 @@ const AppointmentItem = props => {
   const starImage = isClicked
     ? 'https://assets.ccbp.in/frontend/react-js/appointments-app/filled-star-img.png'
     : 'https://assets.ccbp.in/frontend/react-js/appointments-app/star-img.png'
-  const formatedDate = format(new Date(2021, 19, 7), 'dd MMMM yyyy, EEEE')
+  const formatedDate = format(new Date(appointmentDate), 'dd MMMM yyyy, EEEE')
   const starStatusChange = () => {
     toggleStarStatus(appointmentId)
   }
